@@ -7,13 +7,22 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --write .",
     "openapi:generate": "openapi-generator-cli generate -i http://localhost:3000/api/swagger.json -g typescript-fetch -o ./src/api"
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.3.0",
+    "@mui/material": "^6.3.0",
+    "@mui/material-nextjs": "^6.3.0",
+    "@mui/x-data-grid": "^7.23.5",
+    "@tanstack/react-query": "^5.62.11",
+    "@tanstack/react-query-devtools": "^5.62.11",
     "next": "15.1.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "styled-components": "^6.1.13"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -23,6 +32,10 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.3",
+    "prettier": "^3.4.2",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@emotion/serialize": "1.2.0"
   }
 }

@@ -16,89 +16,89 @@ import { mapValues } from '../runtime';
 /**
  *
  * @export
- * @interface GetUsers200ResponseUsersInner
+ * @interface GetUsers200ResponseItemsInner
  */
-export interface GetUsers200ResponseUsersInner {
+export interface GetUsers200ResponseItemsInner {
   /**
    *
    * @type {string}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   avatarPicture: string;
   /**
    *
    * @type {string}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   city: string;
   /**
    *
    * @type {string}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   country: string;
   /**
    *
    * @type {string}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   occupation: string;
   /**
    *
    * @type {string}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   description: string;
   /**
    *
    * @type {string}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   gender: string;
   /**
    *
    * @type {number}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   age: number;
   /**
    *
    * @type {string}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   username: string;
   /**
    *
    * @type {string}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   lastName: string;
   /**
    *
    * @type {string}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   firstName: string;
   /**
    *
    * @type {string}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   localsId: string;
   /**
    *
    * @type {number}
-   * @memberof GetUsers200ResponseUsersInner
+   * @memberof GetUsers200ResponseItemsInner
    */
   id: number;
 }
 
 /**
- * Check if a given object implements the GetUsers200ResponseUsersInner interface.
+ * Check if a given object implements the GetUsers200ResponseItemsInner interface.
  */
-export function instanceOfGetUsers200ResponseUsersInner(
+export function instanceOfGetUsers200ResponseItemsInner(
   value: object,
-): value is GetUsers200ResponseUsersInner {
+): value is GetUsers200ResponseItemsInner {
   if (!('avatarPicture' in value) || value['avatarPicture'] === undefined)
     return false;
   if (!('city' in value) || value['city'] === undefined) return false;
@@ -117,16 +117,16 @@ export function instanceOfGetUsers200ResponseUsersInner(
   return true;
 }
 
-export function GetUsers200ResponseUsersInnerFromJSON(
+export function GetUsers200ResponseItemsInnerFromJSON(
   json: any,
-): GetUsers200ResponseUsersInner {
-  return GetUsers200ResponseUsersInnerFromJSONTyped(json, false);
+): GetUsers200ResponseItemsInner {
+  return GetUsers200ResponseItemsInnerFromJSONTyped(json, false);
 }
 
-export function GetUsers200ResponseUsersInnerFromJSONTyped(
+export function GetUsers200ResponseItemsInnerFromJSONTyped(
   json: any,
   ignoreDiscriminator: boolean,
-): GetUsers200ResponseUsersInner {
+): GetUsers200ResponseItemsInner {
   if (json == null) {
     return json;
   }
@@ -146,14 +146,14 @@ export function GetUsers200ResponseUsersInnerFromJSONTyped(
   };
 }
 
-export function GetUsers200ResponseUsersInnerToJSON(
+export function GetUsers200ResponseItemsInnerToJSON(
   json: any,
-): GetUsers200ResponseUsersInner {
-  return GetUsers200ResponseUsersInnerToJSONTyped(json, false);
+): GetUsers200ResponseItemsInner {
+  return GetUsers200ResponseItemsInnerToJSONTyped(json, false);
 }
 
-export function GetUsers200ResponseUsersInnerToJSONTyped(
-  value?: GetUsers200ResponseUsersInner | null,
+export function GetUsers200ResponseItemsInnerToJSONTyped(
+  value?: GetUsers200ResponseItemsInner | null,
   ignoreDiscriminator: boolean = false,
 ): any {
   if (value == null) {

@@ -1,14 +1,12 @@
-import Link from 'next/link';
 import Container from '@mui/material/Container';
+import { Users } from '@/components/Users';
 
 export default function Home() {
   return (
     <Container maxWidth='lg'>
-      <ul>
-        <li>
-          <Link href='/users'>Users</Link>
-        </li>
-      </ul>
+      <h1>Users</h1>
+
+      <Users />
     </Container>
   );
 }
