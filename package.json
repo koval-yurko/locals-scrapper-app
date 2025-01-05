@@ -8,6 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
+    "cdk:synth": "cdk synth",
+    "cdk:bootstrap": "cdk bootstrap",
+    "cdk:deploy:dev": "cdk deploy LocalsScrapperAppDevStack",
+    "cdk:deploy:prod": "cdk deploy LocalsScrapperAppProdStack",
+    "cdk:destroy": "cdk destroy --all",
     "openapi:generate": "openapi-generator-cli generate -i http://localhost:3000/api/swagger.json -g typescript-fetch -o ./src/api"
   },
   "dependencies": {
@@ -30,9 +35,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "aws-cdk-lib": "2.173.2",
     "eslint": "^9",
     "eslint-config-next": "15.1.3",
     "prettier": "^3.4.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   },
   "overrides": {

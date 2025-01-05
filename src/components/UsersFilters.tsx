@@ -5,6 +5,8 @@ import Grid from '@mui/material/Grid2';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Slider from '@mui/material/Slider';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { SearchBar } from '@/components/SearchBar';
 
 export type UsersFiltersProps = {
@@ -13,6 +15,8 @@ export type UsersFiltersProps = {
   onNameSearchChange: (nameSearch: string) => void;
   onCitySearchChange: (citySearch: string) => void;
   onAgeRangeChange: (ageRange: number[]) => void;
+  voteSearch: number;
+  onVoteSearchChange: (voteSearch: number) => void;
 };
 
 export function UsersFilters({
@@ -21,8 +25,10 @@ export function UsersFilters({
   onNameSearchChange,
   onCitySearchChange,
   onAgeRangeChange,
+  voteSearch,
+  onVoteSearchChange,
 }: UsersFiltersProps) {
-  const [ageRange, setAgeRange] = useState([20, 37]);
+  const [ageRange, setAgeRange] = useState([20, 40]);
 
   const onMaleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -40,7 +46,23 @@ export function UsersFilters({
     }
   };
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
+  const onLikeSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      onVoteSearchChange(1);
+    } else {
+      onVoteSearchChange(0);
+    }
+  };
+
+  const onDislikeSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      onVoteSearchChange(-1);
+    } else {
+      onVoteSearchChange(0);
+    }
+  };
+
+  const handleAgeRangeChange = (event: Event, newValue: number | number[]) => {
     setAgeRange(newValue as number[]);
     onAgeRangeChange(newValue as number[]);
   };
@@ -61,7 +83,7 @@ export function UsersFilters({
           <Slider
             getAriaLabel={() => 'Temperature range'}
             value={ageRange}
-            onChange={handleChange}
+            onChange={handleAgeRangeChange}
             valueLabelDisplay='auto'
             marks={[
               {
@@ -106,6 +128,32 @@ export function UsersFilters({
               />
             }
             label='F'
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid size={5}></Grid>
+        <Grid size={3}></Grid>
+        <Grid size={4}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={voteSearch === 1}
+                onChange={onLikeSelect}
+                size='large'
+              />
+            }
+            label={<ThumbUpIcon />}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={voteSearch === -1}
+                onChange={onDislikeSelect}
+                size='large'
+              />
+            }
+            label={<ThumbDownIcon />}
           />
         </Grid>
       </Grid>

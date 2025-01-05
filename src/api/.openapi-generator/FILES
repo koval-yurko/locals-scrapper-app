@@ -1,7 +1,13 @@
 apis/DefaultApi.ts
 apis/index.ts
 index.ts
+models/GetTasks200Response.ts
+models/GetTasks200ResponseItemsInner.ts
 models/GetUsers200Response.ts
 models/GetUsers200ResponseItemsInner.ts
+models/JsonValue.ts
+models/ScanEvent200Response.ts
+models/ScanEventParams.ts
+models/VoteUserParams.ts
 models/index.ts
 runtime.ts

@@ -22,7 +22,7 @@ export function SDKProvider({ children }: { children: React.ReactNode }) {
 
   const sdk = useMemo(() => {
     const config = new Configuration({
-      basePath: 'http://localhost:3000/api',
+      basePath: process.env.NEXT_PUBLIC_API_URL,
     });
 
     return new DefaultApi(config);

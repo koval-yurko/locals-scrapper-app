@@ -13,6 +13,7 @@ import {
   GridRenderCellParams,
 } from '@mui/x-data-grid';
 import { UsersFilters } from '@/components/UsersFilters';
+import { UserVote } from '@/components/UserVote';
 import { useUsers, UseUsersProps } from '@/hooks/useUsers';
 
 function GridAvatarCell(props: GridRenderCellParams) {
@@ -37,7 +38,7 @@ function GridLongTextCell(props: GridRenderCellParams) {
   return <div className='wrap-text'>{props.value || ''}</div>;
 }
 
-export function Users() {
+export function UsersTable() {
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     pageSize: 25,
     page: 0,
@@ -47,6 +48,7 @@ export function Users() {
   const [citySearch, setCitySearch] = useState('');
   const [genderSearch, setGenderSearch] = useState('');
   const [ageRange, setAgeRange] = useState<number[]>([]);
+  const [voteSearch, setVoteSearch] = useState(0);
 
   const requestQuery: UseUsersProps = {
     page: paginationModel.page,
@@ -60,6 +62,9 @@ export function Users() {
   if (sortModel[0]?.field) {
     requestQuery.sort = sortModel[0]?.sort as string;
     requestQuery.sortField = sortModel[0]?.field;
+  }
+  if (voteSearch) {
+    requestQuery.voteSearch = voteSearch;
   }
   const { data, isLoading } = useUsers(requestQuery);
 
@@ -106,6 +111,16 @@ export function Users() {
       cellClassName: 'long-text align-right',
       renderCell: (params) => <GridLongTextCell {...params} />,
     },
+    {
+      field: 'votes',
+      headerName: 'Action',
+      flex: 2,
+      sortable: false,
+      cellClassName: 'long-text',
+      renderCell: (params) => (
+        <UserVote id={params.row.id} votes={params.row.votes}></UserVote>
+      ),
+    },
   ];
 
   return (
@@ -116,6 +131,8 @@ export function Users() {
         onNameSearchChange={setNameSearch}
         onCitySearchChange={setCitySearch}
         onAgeRangeChange={setAgeRange}
+        voteSearch={voteSearch}
+        onVoteSearchChange={setVoteSearch}
       />
       <div>
         <DataGrid
