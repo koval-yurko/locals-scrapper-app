@@ -1,5 +1,3 @@
-'use client';
-
 import Grid from '@mui/material/Grid2';
 import IconButton from '@mui/material/IconButton';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -26,7 +24,7 @@ export function UserVote({ id, votes }: UserVoteProps) {
   };
 
   return (
-    <Grid container width='100%' justifyContent='center'>
+    <Grid container width='100%' justifyContent='flex-end'>
       <IconButton component='button' onClick={onLikeClick} disabled={isLoading}>
         {votes === 1 ? <ThumbUpIcon color='success' /> : <ThumbUpOffAltIcon />}
       </IconButton>

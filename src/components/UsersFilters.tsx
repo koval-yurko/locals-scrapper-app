@@ -1,6 +1,4 @@
-'use client';
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid2';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -14,7 +12,10 @@ export type UsersFiltersProps = {
   onGenderSearchChange: (genderSearch: string) => void;
   onNameSearchChange: (nameSearch: string) => void;
   onCitySearchChange: (citySearch: string) => void;
+  ageRange: number[];
   onAgeRangeChange: (ageRange: number[]) => void;
+  heightRange: number[];
+  onHeightRangeChange: (heightRange: number[]) => void;
   voteSearch: number;
   onVoteSearchChange: (voteSearch: number) => void;
 };
@@ -24,11 +25,18 @@ export function UsersFilters({
   onGenderSearchChange,
   onNameSearchChange,
   onCitySearchChange,
+  ageRange,
   onAgeRangeChange,
+  heightRange,
+  onHeightRangeChange,
   voteSearch,
   onVoteSearchChange,
 }: UsersFiltersProps) {
-  const [ageRange, setAgeRange] = useState([20, 40]);
+  const [isServer, setIsServer] = useState(true);
+
+  useEffect(() => {
+    setIsServer(false);
+  }, []);
 
   const onMaleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -63,9 +71,19 @@ export function UsersFilters({
   };
 
   const handleAgeRangeChange = (event: Event, newValue: number | number[]) => {
-    setAgeRange(newValue as number[]);
     onAgeRangeChange(newValue as number[]);
   };
+
+  const handleHeightRangeChange = (
+    event: Event,
+    newValue: number | number[],
+  ) => {
+    onHeightRangeChange(newValue as number[]);
+  };
+
+  if (isServer) {
+    return null;
+  }
 
   return (
     <>
@@ -81,7 +99,6 @@ export function UsersFilters({
       <Grid container spacing={2}>
         <Grid size={5}>
           <Slider
-            getAriaLabel={() => 'Temperature range'}
             value={ageRange}
             onChange={handleAgeRangeChange}
             valueLabelDisplay='auto'
@@ -132,7 +149,42 @@ export function UsersFilters({
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        <Grid size={5}></Grid>
+        <Grid size={5}>
+          <Slider
+            value={heightRange}
+            onChange={handleHeightRangeChange}
+            valueLabelDisplay='auto'
+            marks={[
+              {
+                value: 150,
+                label: '150',
+              },
+              {
+                value: 160,
+                label: '160',
+              },
+              {
+                value: 170,
+                label: '170',
+              },
+              {
+                value: 180,
+                label: '180',
+              },
+              {
+                value: 190,
+                label: '190',
+              },
+              {
+                value: 200,
+                label: '200',
+              },
+            ]}
+            step={5}
+            min={150}
+            max={200}
+          />
+        </Grid>
         <Grid size={3}></Grid>
         <Grid size={4}>
           <FormControlLabel

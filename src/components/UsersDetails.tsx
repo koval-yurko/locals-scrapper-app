@@ -1,5 +1,3 @@
-'use client';
-
 import { useMemo } from 'react';
 import Alert from '@mui/material/Alert';
 import Table from '@mui/material/Table';
@@ -56,7 +54,7 @@ export function UserDetails({ userId }: { userId: number }) {
               <TableCell>Name</TableCell>
               <TableCell>Age</TableCell>
               <TableCell>City</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell align='right'>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -95,8 +93,8 @@ export function UserDetails({ userId }: { userId: number }) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell scope='row'>
-                <a href={data.shareLink} target='_blank'>
-                  {data.shareLink}
+                <a href={data.shareLink} target='_blank' rel='noreferrer'>
+                  {data.username}
                 </a>
               </TableCell>
               <TableCell scope='row'>
@@ -104,6 +102,7 @@ export function UserDetails({ userId }: { userId: number }) {
                   <a
                     href={`https://www.instagram.com/${data.instagramUsername}/`}
                     target='_blank'
+                    rel='noreferrer'
                   >
                     @{data.instagramUsername}
                   </a>
@@ -111,7 +110,7 @@ export function UserDetails({ userId }: { userId: number }) {
               </TableCell>
               <TableCell scope='row'>
                 {data.linkedinLink ? (
-                  <a href={data.linkedinLink} target='_blank'>
+                  <a href={data.linkedinLink} target='_blank' rel='noreferrer'>
                     {data.linkedinLink}
                   </a>
                 ) : null}

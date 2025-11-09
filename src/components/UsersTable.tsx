@@ -1,54 +1,134 @@
-'use client';
-
-import { useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router';
+import Grid from '@mui/material/Grid2';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import {
   DataGrid,
   GridColDef,
-  GridPaginationModel,
   GridRowsProp,
-  GridSortModel,
   GridRenderCellParams,
 } from '@mui/x-data-grid';
+import { useUsersTableState } from '@/contexts/UsersTableStateProvider';
 import { UsersFilters } from '@/components/UsersFilters';
 import { UserVote } from '@/components/UserVote';
-import { useUsers, UseUsersProps } from '@/hooks/useUsers';
+import { useUsers, UseUsersProps, User } from '@/hooks/useUsers';
 
 function GridAvatarCell(props: GridRenderCellParams) {
   if (props.value == null) {
     return null;
   }
 
+  const photos = (props.row.photos || []) as { id: string; src: string }[];
+
   return (
-    <Link href={`/users/${props.row.id}`}>
+    <Link to={`/users/${props.row.id}`}>
       <Tooltip title={props.row.description} placement='right'>
-        <Avatar
-          src={props.value as string}
-          sx={{ width: 150, height: 150 }}
-          variant={'rounded'}
-        />
+        <Grid container gap={1} sx={{ mt: 1 }}>
+          <Grid>
+            {photos[0] ? (
+              <Avatar
+                src={photos[0].src as string}
+                sx={{ width: 150, height: 150 }}
+                variant={'rounded'}
+              />
+            ) : (
+              <Avatar
+                src={props.value as string}
+                sx={{ width: 150, height: 150 }}
+                variant={'rounded'}
+              />
+            )}
+          </Grid>
+          <Grid>
+            {photos[1] ? (
+              <Avatar
+                src={photos[1].src as string}
+                sx={{ width: 150, height: 150 }}
+                variant={'rounded'}
+              />
+            ) : null}
+          </Grid>
+          <Grid>
+            {photos[2] ? (
+              <Avatar
+                src={photos[2].src as string}
+                sx={{ width: 150, height: 150 }}
+                variant={'rounded'}
+              />
+            ) : null}
+          </Grid>
+        </Grid>
       </Tooltip>
     </Link>
   );
 }
 
-function GridLongTextCell(props: GridRenderCellParams) {
-  return <div className='wrap-text'>{props.value || ''}</div>;
+function GridInfoCell(props: GridRenderCellParams) {
+  const {
+    username,
+    shareLink,
+    firstName,
+    lastName,
+    occupation,
+    country,
+    city,
+    instagramUsername,
+    linkedinLink,
+  } = props.row as User;
+  return (
+    <div>
+      <b>
+        {firstName} {lastName}
+      </b>
+      <br />
+      {occupation ? `${occupation}` : ''} <br />
+      {country ? `${country},` : ''} {city || ''}
+      <br />
+      <a href={shareLink} target='_blank' rel='noreferrer'>
+        {username}
+      </a>
+      <br />
+      {instagramUsername ? (
+        <>
+          <b>ig:</b>{' '}
+          <a
+            href={`https://www.instagram.com/${instagramUsername}/`}
+            target='_blank'
+            rel='noreferrer'
+          >
+            @{instagramUsername}
+          </a>
+        </>
+      ) : null}
+      <br />
+      {linkedinLink ? (
+        <a href={linkedinLink} target='_blank' rel='noreferrer'>
+          https://www.linkedin.com
+        </a>
+      ) : null}
+    </div>
+  );
 }
 
 export function UsersTable() {
-  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: 25,
-    page: 0,
-  });
-  const [sortModel, setSortModel] = useState<GridSortModel>([]);
-  const [nameSearch, setNameSearch] = useState('');
-  const [citySearch, setCitySearch] = useState('');
-  const [genderSearch, setGenderSearch] = useState('');
-  const [ageRange, setAgeRange] = useState<number[]>([]);
-  const [voteSearch, setVoteSearch] = useState(0);
+  const {
+    paginationModel,
+    setPaginationModel,
+    sortModel,
+    setSortModel,
+    nameSearch,
+    setNameSearch,
+    citySearch,
+    setCitySearch,
+    genderSearch,
+    setGenderSearch,
+    ageRange,
+    setAgeRange,
+    heightRange,
+    setHeightRange,
+    voteSearch,
+    setVoteSearch,
+  } = useUsersTableState();
 
   const requestQuery: UseUsersProps = {
     page: paginationModel.page,
@@ -58,6 +138,8 @@ export function UsersTable() {
     genderSearch: genderSearch,
     ageFrom: ageRange[0],
     ageTo: ageRange[1],
+    heightFrom: heightRange[0],
+    heightTo: heightRange[1],
   };
   if (sortModel[0]?.field) {
     requestQuery.sort = sortModel[0]?.sort as string;
@@ -76,22 +158,28 @@ export function UsersTable() {
       field: 'avatarPicture',
       headerName: 'Avatar',
       sortable: false,
-      width: 170,
+      width: 500,
       renderCell: (params) => <GridAvatarCell {...params} />,
     },
     {
-      field: 'lastName',
-      headerName: 'Name',
+      field: 'username',
+      headerName: 'Username',
       flex: 3,
       sortable: false,
-      valueFormatter: (value, row) => `${row.firstName} ${row.lastName}`,
-      cellClassName: 'long-text align-left',
-      renderCell: (params) => <GridLongTextCell {...params} />,
+      cellClassName: 'flex-center align-left',
+      renderCell: (params) => <GridInfoCell {...params} />,
     },
-    { field: 'username', headerName: 'Username', flex: 3, sortable: false },
     {
       field: 'age',
       headerName: 'Age',
+      flex: 1,
+      type: 'number',
+      align: 'left',
+      headerAlign: 'left',
+    },
+    {
+      field: 'height',
+      headerName: 'Height',
       flex: 1,
       type: 'number',
       align: 'left',
@@ -104,19 +192,13 @@ export function UsersTable() {
       valueFormatter: (value) => (value === 'male' ? 'M' : 'F'),
     },
     {
-      field: 'city',
-      headerName: 'City',
-      flex: 2,
-      sortable: false,
-      cellClassName: 'long-text align-right',
-      renderCell: (params) => <GridLongTextCell {...params} />,
-    },
-    {
       field: 'votes',
       headerName: 'Action',
       flex: 2,
       sortable: false,
-      cellClassName: 'long-text',
+      align: 'right',
+      headerAlign: 'right',
+      cellClassName: 'flex-center align-right',
       renderCell: (params) => (
         <UserVote id={params.row.id} votes={params.row.votes}></UserVote>
       ),
@@ -130,14 +212,17 @@ export function UsersTable() {
         onGenderSearchChange={setGenderSearch}
         onNameSearchChange={setNameSearch}
         onCitySearchChange={setCitySearch}
+        ageRange={ageRange}
         onAgeRangeChange={setAgeRange}
+        heightRange={heightRange}
+        onHeightRangeChange={setHeightRange}
         voteSearch={voteSearch}
         onVoteSearchChange={setVoteSearch}
       />
       <div>
         <DataGrid
           rows={rows}
-          rowHeight={160}
+          rowHeight={170}
           rowCount={rowCount}
           columns={columns}
           loading={isLoading}
@@ -149,7 +234,7 @@ export function UsersTable() {
           onSortModelChange={setSortModel}
           disableColumnFilter={true}
           sx={{
-            '& .long-text': {
+            '& .flex-center': {
               display: 'flex',
               alignItems: 'center',
               whiteSpace: 'normal',

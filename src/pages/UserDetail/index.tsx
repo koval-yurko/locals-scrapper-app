@@ -1,15 +1,8 @@
-'use client';
-
-import { useParams } from 'next/navigation';
+import { useParams } from 'react-router';
 import { UserDetails } from '@/components/UsersDetails';
 
-export default function UserPage() {
+export default function UserDetail() {
   const params = useParams();
-
-  if (!params || !params.userId) {
-    return null;
-  }
-
   const userId = params.userId as unknown as number;
 
   return <UserDetails userId={userId} />;

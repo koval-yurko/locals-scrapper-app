@@ -55,6 +55,8 @@ export interface GetUsersRequest {
     voteSearch?: number;
     ageFrom?: number;
     ageTo?: number;
+    heightFrom?: number;
+    heightTo?: number;
 }
 
 export interface ScanEventRequest {
@@ -77,6 +79,10 @@ export class DefaultApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-API-KEY"] = await this.configuration.apiKey("X-API-KEY"); // ApiKeyAuth authentication
+        }
 
         const response = await this.request({
             path: `/tasks`,
@@ -183,8 +189,24 @@ export class DefaultApi extends runtime.BaseAPI {
             queryParameters['ageTo'] = requestParameters['ageTo'];
         }
 
+        if (requestParameters['heightFrom'] != null) {
+            queryParameters['heightFrom'] = requestParameters['heightFrom'];
+        }
+
+        if (requestParameters['heightTo'] != null) {
+            queryParameters['heightTo'] = requestParameters['heightTo'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("JWTAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
         const response = await this.request({
             path: `/users`,
             method: 'GET',
@@ -217,6 +239,10 @@ export class DefaultApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-API-KEY"] = await this.configuration.apiKey("X-API-KEY"); // ApiKeyAuth authentication
+        }
 
         const response = await this.request({
             path: `/tasks/scan-event`,

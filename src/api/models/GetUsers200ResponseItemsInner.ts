@@ -32,6 +32,12 @@ export interface GetUsers200ResponseItemsInner {
      * @type {number}
      * @memberof GetUsers200ResponseItemsInner
      */
+    height: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetUsers200ResponseItemsInner
+     */
     votes: number;
     /**
      * 
@@ -135,6 +141,7 @@ export interface GetUsers200ResponseItemsInner {
  * Check if a given object implements the GetUsers200ResponseItemsInner interface.
  */
 export function instanceOfGetUsers200ResponseItemsInner(value: object): value is GetUsers200ResponseItemsInner {
+    if (!('height' in value) || value['height'] === undefined) return false;
     if (!('votes' in value) || value['votes'] === undefined) return false;
     if (!('linkedinLink' in value) || value['linkedinLink'] === undefined) return false;
     if (!('instagramUsername' in value) || value['instagramUsername'] === undefined) return false;
@@ -165,6 +172,7 @@ export function GetUsers200ResponseItemsInnerFromJSONTyped(json: any, ignoreDisc
     }
     return {
         
+        'height': json['height'],
         'votes': json['votes'],
         'linkedinLink': json['linkedinLink'],
         'instagramUsername': json['instagramUsername'],
@@ -196,6 +204,7 @@ export function GetUsers200ResponseItemsInnerToJSONTyped(value?: GetUsers200Resp
 
     return {
         
+        'height': value['height'],
         'votes': value['votes'],
         'linkedinLink': value['linkedinLink'],
         'instagramUsername': value['instagramUsername'],

@@ -18,6 +18,7 @@ export const useUserVote = (userId: number) => {
       });
     },
     onSuccess: () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       queryClient.invalidateQueries<any>(['users']);
     },
   });

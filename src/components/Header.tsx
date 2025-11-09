@@ -1,7 +1,5 @@
-'use client';
-
 import * as React from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
@@ -12,10 +10,10 @@ export default function Header() {
     <AppBar position='static' sx={{ mb: 4 }}>
       <Container maxWidth='lg'>
         <Toolbar disableGutters>
-          <Button component={Link} href='/' color='inherit'>
+          <Button color='inherit' component={Link} to='/'>
             Home
           </Button>
-          <Button component={Link} href='/users' color='inherit'>
+          <Button color='inherit' component={Link} to='/users'>
             Users
           </Button>
         </Toolbar>
