@@ -8,6 +8,7 @@
     "preview": "vite preview",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx,json}\"",
     "format": "prettier --write .",
+    "security:check": "bash scripts/check-secrets.sh",
     "cdk:synth": "cdk synth",
     "cdk:bootstrap": "cdk bootstrap",
     "cdk:deploy:dev": "npm run build && cdk deploy LocalsScrapperAppDevStack",

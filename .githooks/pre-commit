@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Pre-commit hook to run security checks
+# To install this hook, run: git config core.hooksPath .githooks
+
+echo "🔒 Running pre-commit security checks..."
+
+# Run the security check script
+if ! npm run security:check; then
+    echo ""
+    echo "❌ Pre-commit security check failed!"
+    echo "Please fix the security issues before committing."
+    echo "You can run 'npm run security:check' to see the issues."
+    exit 1
+fi
+
+echo "✅ Security checks passed!"
+exit 0
