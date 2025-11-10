@@ -4,8 +4,13 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import { useAuthContext } from '@/contexts/AuthProvider';
 
 export default function Header() {
+  const { user, logout } = useAuthContext();
+
   return (
     <AppBar position='static' sx={{ mb: 4 }}>
       <Container maxWidth='lg'>
@@ -16,6 +21,21 @@ export default function Header() {
           <Button color='inherit' component={Link} to='/users'>
             Users
           </Button>
+          {user && (
+            <>
+              <Box sx={{ flexGrow: 1 }} />
+              <Typography>{user?.name || user?.email || 'User'}</Typography>
+              <Button
+                color='inherit'
+                sx={{ ml: 2 }}
+                onClick={() => {
+                  logout();
+                }}
+              >
+                Logout
+              </Button>
+            </>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

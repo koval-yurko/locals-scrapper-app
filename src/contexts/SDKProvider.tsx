@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Configuration, DefaultApi } from '@/api';
 import { createAuthMiddleware } from '@/lib/authMiddleware';
-import { useAuth } from './AuthProvider';
+import { useAuthContext } from './AuthProvider';
 
 interface SDKContextType {
   sdk: DefaultApi;
@@ -18,7 +18,7 @@ const defaultContext: SDKContextType = {
 const SDKContext = createContext<SDKContextType>(defaultContext);
 
 export function SDKProvider({ children }: { children: React.ReactNode }) {
-  const { session } = useAuth();
+  const { accessToken } = useAuthContext();
 
   const queryClient = useMemo(() => {
     return new QueryClient();
@@ -27,12 +27,12 @@ export function SDKProvider({ children }: { children: React.ReactNode }) {
   const sdk = useMemo(() => {
     const config = new Configuration({
       basePath: import.meta.env.VITE_API_URL,
-      accessToken: session?.access_token,
+      accessToken: accessToken || undefined,
       middleware: [createAuthMiddleware()],
     });
 
     return new DefaultApi(config);
-  }, [session]);
+  }, [accessToken]);
 
   return (
     <SDKContext.Provider value={{ sdk }}>

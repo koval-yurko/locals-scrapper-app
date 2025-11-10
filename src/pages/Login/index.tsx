@@ -1,21 +1,48 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { Box, Card, CardContent, Typography } from '@mui/material';
-import { Auth } from '@supabase/auth-ui-react';
-import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { supabase } from '@/api';
-import { useAuth } from '@/contexts/AuthProvider';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  CircularProgress,
+} from '@mui/material';
+import { useAuthContext } from '@/contexts/AuthProvider';
 
-export default function Login() {
+export default function Login2() {
   const navigate = useNavigate();
-  const { session } = useAuth();
+  const { user, loading, loginWithRedirect } = useAuthContext();
 
   useEffect(() => {
     // Redirect if user is already logged in
-    if (session) {
+    if (user) {
       navigate('/');
     }
-  }, [session, navigate]);
+  }, [user, navigate]);
+
+  const handleLogin = async () => {
+    try {
+      await loginWithRedirect();
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '80vh',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -31,22 +58,23 @@ export default function Login() {
           <Typography variant='h5' component='h1' gutterBottom align='center'>
             Welcome
           </Typography>
-          <Auth
-            supabaseClient={supabase}
-            appearance={{
-              theme: ThemeSupa,
-              variables: {
-                default: {
-                  colors: {
-                    brand: '#1976d2',
-                    brandAccent: '#1468bc',
-                  },
-                },
-              },
-            }}
-            providers={[]}
-            redirectTo={window.location.origin}
-          />
+          <Typography
+            variant='body2'
+            color='text.secondary'
+            align='center'
+            sx={{ mb: 3 }}
+          >
+            Sign in with Auth0 to continue
+          </Typography>
+          <Button
+            fullWidth
+            variant='contained'
+            size='large'
+            onClick={handleLogin}
+            sx={{ mt: 2 }}
+          >
+            Sign In with Auth0
+          </Button>
         </CardContent>
       </Card>
     </Box>

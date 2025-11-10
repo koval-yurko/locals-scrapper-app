@@ -9,13 +9,14 @@
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx,json}\"",
     "format": "prettier --write .",
     "cdk:synth": "cdk synth",
-    "cdk:bootstrap": "cdk bootstrap",
-    "cdk:deploy:dev": "npm run build && cdk deploy LocalsScrapperAppDevStack",
-    "cdk:deploy:prod": "npm run build && cdk deploy LocalsScrapperAppProdStack",
+    "cdk:bootstrap": "AWS_REGION=eu-central-1 cdk bootstrap",
+    "cdk:deploy:dev": "npm run build && AWS_REGION=eu-central-1 cdk deploy LocalsScrapperAppDevStack",
+    "cdk:deploy:prod": "npm run build && AWS_REGION=eu-central-1 cdk deploy LocalsScrapperAppProdStack",
     "cdk:destroy": "cdk destroy --all",
     "openapi:generate": "openapi-generator-cli generate -i http://localhost:3000/api/swagger.json -g typescript-fetch -o ./src/api"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.8.0",
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",

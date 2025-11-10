@@ -3,7 +3,6 @@ import type { Middleware } from '@/api/runtime';
 export const createAuthMiddleware = (): Middleware => {
   const handleUnauthorized = (response: Response) => {
     if (response.status === 401) {
-      console.log('401 detected - redirecting to login');
       // Redirect to login page on 401 Unauthorized
       window.location.hash = '/login';
     }
