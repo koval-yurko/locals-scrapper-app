@@ -20,6 +20,7 @@ export default defineConfig({
     },
   },
   test: {
-    root: path.resolve(__dirname, './src'),
+    root: path.resolve(__dirname, '.'),
+    include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
   },
 });
